@@ -7,6 +7,13 @@
 #| @author acikek
 
 
+# Returns a new item with the ilore data applied.
+# Requires the item to have an 'ilore' flag. If not, returns the original item.
+# @def {item} item: The item to apply lore to.
+# @determine {item} The item with applied lore.
+# @usage <item[my_item].proc[ilore]>
+# @uses ilore_colors
+
 ilore:
   type: procedure
   definitions: item
@@ -32,6 +39,11 @@ ilore:
   # Final item
   - determine <[item].with[lore=<list[<[desc]>|<[sep]>|<[a_header]>|<[abilities]>|<[sep]>|<[rarity]>].combine>;hides=ATTRIBUTES]>
 
+
+# The ilore color config.
+# All keys are tier names and their color tags.
+# @usage ilore_colors:$n  type: data$n  <name>: <color>
+
 ilore_colors:
   type: data
   common: <white>
@@ -39,6 +51,7 @@ ilore_colors:
   rare: <aqua>
   super rare: <light_purple>
   legendary: <gold>
+
 
 wooden_bat:
   type: item

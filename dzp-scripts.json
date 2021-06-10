@@ -1,0 +1,79 @@
+{
+  "scripts": [
+    {
+      "path": "ilore.dsc",
+      "data": [
+        "ilore:",
+        "  type: procedure",
+        "  definitions: item",
+        "  script:",
+        "  - if !<[item].has_flag[ilore]>:",
+        "    - determine <[item]>",
+        "  # Item data and constants",
+        "  - define data <[item].flag[ilore]>",
+        "  - define sep <list[<empty>|<empty>]>",
+        "  # Description",
+        "  - define desc \"<list[<[data].get[description].split_lines_by_width[220].split[<n>].if_null[No description]>].parse_tag[<gray><[parse_value]>]>\"",
+        "  # Abilities list",
+        "  - define abilities \"<[data].get[abilities].if_null[<list[None]>].parse_tag[<dark_gray>- <gray><[parse_value]>]>\"",
+        "  - define a_header <&color[#FFC42E]>Abilities<gray><&co>",
+        "  # Rarity tier",
+        "  - define r_color <script[ilore_colors].data_key[<[data].get[rarity].to_lowercase>].parsed.if_null[<white>]>",
+        "  - define rarity <&r><[r_color]><bold><[data].get[rarity].to_uppercase.if_null[COMMON]>",
+        "  # Final item",
+        "  - determine <[item].with[lore=<list[<[desc]>|<[sep]>|<[a_header]>|<[abilities]>|<[sep]>|<[rarity]>].combine>;hides=ATTRIBUTES]>"
+      ],
+      "name": "ilore",
+      "type": "procedure",
+      "metadata": {
+        "desc": [
+          "Returns a new item with the ilore data applied.",
+          "Requires the item to have an 'ilore' flag. If not, returns the original item."
+        ],
+        "def": [
+          {
+            "type": "item",
+            "name": "item",
+            "info": "The item to apply lore to."
+          }
+        ],
+        "determine": [
+          {
+            "type": "item",
+            "name": "The item with applied lore."
+          }
+        ],
+        "usage": [
+          {
+            "type": "<item[my_item].proc[ilore]>"
+          }
+        ],
+        "uses": [
+          {
+            "type": "ilore_colors"
+          }
+        ]
+      }
+    },
+    {
+      "path": "ilore.dsc",
+      "data": [
+        "ilore_colors:",
+        "  type: data",
+        "  common: <white>",
+        "  uncommon: <green>",
+        "  rare: <aqua>",
+        "  super rare: <light_purple>",
+        "  legendary: <gold>"
+      ],
+      "name": "ilore_colors",
+      "type": "data",
+      "metadata": {
+        "desc": [
+          "The ilore color config.",
+          "All keys are tier names and their color tags."
+        ]
+      }
+    }
+  ]
+}
