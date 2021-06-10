@@ -32,7 +32,7 @@ wooden_bat:
       # A key in the 'ilore_colors' script
       rarity: legendary
 
-# /ex give <item[wooden_bat].proc[ilore]>s
+# /ex give <item[wooden_bat].proc[ilore]>
 ```
 
 ## Scripts
