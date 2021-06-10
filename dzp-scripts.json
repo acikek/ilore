@@ -72,6 +72,11 @@
         "desc": [
           "The ilore color config.",
           "All keys are tier names and their color tags."
+        ],
+        "usage": [
+          {
+            "type": "ilore_colors:\n  type: data\n  <name>: <color>"
+          }
         ]
       }
     }
