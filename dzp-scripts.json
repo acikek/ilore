@@ -30,6 +30,14 @@
           "Returns a new item with the ilore data applied.",
           "Requires the item to have an 'ilore' flag. If not, returns the original item."
         ],
+        "raw": [
+          "Returns a new item with the ilore data applied.",
+          "Requires the item to have an 'ilore' flag. If not, returns the original item.",
+          "@def {item} item: The item to apply lore to.",
+          "@determine {item} The item with applied lore.",
+          "@usage <item[my_item].proc[ilore]>",
+          "@uses ilore_colors"
+        ],
         "def": [
           {
             "type": "item",
@@ -72,6 +80,11 @@
         "desc": [
           "The ilore color config.",
           "All keys are tier names and their color tags."
+        ],
+        "raw": [
+          "The ilore color config.",
+          "All keys are tier names and their color tags.",
+          "@usage ilore_colors:$n  type: data$n  <name>: <color>"
         ],
         "usage": [
           {
