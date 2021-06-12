@@ -82,6 +82,9 @@ wooden_bat:
 
 ### Procedure
 - `ilore`
+- `ilore_format_element`
+- `ilore_format_list`
+- `ilore_format_map`
 
 ## License
 

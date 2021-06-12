@@ -1,4 +1,4 @@
-#: dzp-ignore ilore_format_element ilore_format_list ilore_format_map wooden_bat
+#: dzp-ignore wooden_bat
 
 #| ilore
 #| Intuitive item lore

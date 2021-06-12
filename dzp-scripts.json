@@ -81,6 +81,56 @@
     {
       "path": "ilore.dsc",
       "data": [
+        "ilore_format_element:",
+        "  type: procedure",
+        "  definitions: value|name",
+        "  script:",
+        "  - determine \"<[name]> <white><[value]>\""
+      ],
+      "name": "ilore_format_element",
+      "type": "procedure",
+      "metadata": {
+        "desc": [],
+        "raw": []
+      }
+    },
+    {
+      "path": "ilore.dsc",
+      "data": [
+        "ilore_format_list:",
+        "  type: procedure",
+        "  definitions: value|name",
+        "  script:",
+        "  - define lines \"<[value].parse_tag[<dark_gray>- <gray><[parse_value]>]>\"",
+        "  - determine <list[<[name]>].include[<[lines]>]>"
+      ],
+      "name": "ilore_format_list",
+      "type": "procedure",
+      "metadata": {
+        "desc": [],
+        "raw": []
+      }
+    },
+    {
+      "path": "ilore.dsc",
+      "data": [
+        "ilore_format_map:",
+        "  type: procedure",
+        "  definitions: value|name",
+        "  script:",
+        "  - define lines \"<[value].parse_value_tag[  <gray><[parse_key]>: <white><[parse_value]>].values>\"",
+        "  - determine <list[<[name]>].include[<[lines]>]>"
+      ],
+      "name": "ilore_format_map",
+      "type": "procedure",
+      "metadata": {
+        "desc": [],
+        "raw": []
+      }
+    },
+    {
+      "path": "ilore.dsc",
+      "data": [
         "ilore:",
         "  type: procedure",
         "  definitions: item",
