@@ -6,12 +6,12 @@ Intuitive item lore
 
 Install with [dzp](https://github.com/acikek/dzp):
 ```sh
-dzp install <repository link>
+dzp install https://github.com/acikek/ilore
 ```
 
 Install with git:
 ```sh
-git clone <repository link>
+git clone https://github.com/acikek/ilore
 ```
 
 ## Config
