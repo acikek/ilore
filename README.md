@@ -78,7 +78,7 @@ wooden_bat:
 
 ## Pre-processing
 
-The `ilore` procedure usually takes a few milliseconds for the average item. For ease-of-access, the `ilore_save` task is provided within the main file. It applies ilore to the item and flags the result to the server under an `ilore_` prefix. 
+The `ilore` procedure usually takes a few milliseconds for the average item. With many items, this processing time can add up. For ease-of-access, the `ilore_save` task is provided within the main file. It applies ilore to the item and flags the result to the server under an `ilore_` prefix. 
 
 Taking the example item above, one might have this setup:
 
