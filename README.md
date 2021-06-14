@@ -76,6 +76,36 @@ wooden_bat:
 
 ![](https://media.discordapp.net/attachments/695402715534196787/853406409747202058/wooden_bat.png)
 
+## Pre-processing
+
+The `ilore` procedure usually takes a few milliseconds for the average item. For ease-of-access, the `ilore_save` task is provided within the main file. It applies ilore to the item and flags the result to the server under an `ilore_` prefix. 
+
+Taking the example item above, one might have this setup:
+
+```yml
+item_config:
+  type: data
+  items:
+  - wooden_bat
+  # other items here...
+
+item_reload:
+  type: task
+  script:
+  - foreach <script[item_config]> as:name:
+    - run ilore_save def:<item[<[name]>]>
+
+item_load:
+  type: world
+  events:
+    after server start:
+    - run item_reload
+    after script reload:
+    - run item_reload
+
+# <server.flag[ilore_wooden_bat]>
+```
+
 ## Scripts
 
 ### Data
@@ -86,6 +116,9 @@ wooden_bat:
 - `ilore_format_element`
 - `ilore_format_list`
 - `ilore_format_map`
+
+### Task
+- `ilore_save`
 
 ## License
 
