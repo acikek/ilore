@@ -20,7 +20,7 @@ The ilore system relies on the `ilore_config` script. The default config is alre
 
 To get started, make a new `ilore_config` data script. Add a `tiers` map, with each rarity tier that items might have. Each key is a tier name, and its value is a color tag.
 
-Then, add a `description` map. The `max_length` key represents the cutoff pixel length that lines should be separated by. The `color` key is a parsed color tag.
+Then, add a `description` map. The `max_length` key represents the cutoff pixel length that lines should be separated by. The `color` key is a parsed color tag. Lastly, the `default` key represents the description if none is provided.
 
 ```yml
 ilore_config:
@@ -28,6 +28,7 @@ ilore_config:
   description:
     max_length: 220
     color: <gray>
+    default: No description
   tiers:
     common: <white>
     uncommon: <green>

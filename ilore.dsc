@@ -11,8 +11,9 @@
 # @key {map} description: The description data.
 # @key {number} description.max_length: The cutoff for description lines, in pixels.
 # @key {color} description.color: The description text color.
+# @key {element} description.default: The description message if none is provided.
 # @key {map} format: The section format data, with each key being a type name and the value being a format procedure.
-# @key {map} sections: The section data, with each key being a section name and the value being a map with type, name, and color.
+# @key {map} sections: The section data, with each key being a section name and the value being a map with a type and name.
 # @key {map} tiers: The item tier data, with each key being a tier name and the value being a color.
 
 ilore_config:
@@ -20,6 +21,7 @@ ilore_config:
   description:
     max_length: 220
     color: <gray>
+    default: No description
   format:
     element: ilore_format_element
     list: ilore_format_list
@@ -49,21 +51,21 @@ ilore_format_element:
   type: procedure
   definitions: value|name
   script:
-  - determine "<[name]> <white><[value]>"
+  - determine "<[name]><gray>: <white><[value]>"
 
 ilore_format_list:
   type: procedure
   definitions: value|name
   script:
   - define lines "<[value].parse_tag[<dark_gray>- <gray><[parse_value]>]>"
-  - determine <list[<[name]>].include[<[lines]>]>
+  - determine <list[<[name]><gray>:].include[<[lines]>]>
 
 ilore_format_map:
   type: procedure
   definitions: value|name
   script:
   - define lines "<[value].parse_value_tag[  <gray><[parse_key]>: <white><[parse_value]>].values>"
-  - determine <list[<[name]>].include[<[lines]>]>
+  - determine <list[<[name]><gray>:].include[<[lines]>]>
 
 
 # Returns a new item with ilore data applied.
@@ -88,16 +90,17 @@ ilore:
 
   # Description constants
   - define description_data <[config].data_key[description]>
-  - define max_length <[description_data].get[max_length].if_null[220]>
-  - define description_color <[description_data].get[color].parsed.if_null[<gray>]>
+  - define desc_length <[description_data].get[max_length].if_null[220]>
+  - define desc_color <[description_data].get[color].parsed.if_null[<gray>]>
+  - define desc_default "<[description_data].get[default].if_null[No description]>"
 
   # Section constants
   - define types <[config].data_key[format]>
 
   # Splits the description element into lines based on the max pixel length in the config.
-  - define description_lines "<list[<[data].get[description].split_lines_by_width[<[max_length]>].split[<n>].if_null[No description]>]>"
+  - define description_lines <list[<[data].get[description].split_lines_by_width[<[desc_length]>].split[<n>].if_null[<[desc_default]>]>]>
   # Parses the description lines to be the desired color.
-  - define description <[description_lines].parse_tag[<[description_color]><[parse_value]>].include[<[sep]>]>
+  - define description <[description_lines].parse_tag[<[desc_color]><[parse_value]>].include[<[sep]>]>
 
   #| This needs to be predefined as a list.
   #| The data action for appending to a list does not offer the same capabilities as ListTag.include.
@@ -132,7 +135,7 @@ ilore:
       - debug error "Item <aqua><[item].script.name><&r>'s ilore section <aqua><[name]><&r> is of type <[section_type]>, should be <[true_type]>"
       - foreach next
 
-    - define name <white><[section].get[name].parsed.if_null[Section]><gray><&co>
+    - define name <white><[section].get[name].parsed.if_null[Section]>
     - define formatted <[section_data].proc[<[script]>].context[<[name]>]>
 
     #| See above comments
@@ -148,6 +151,26 @@ ilore:
 
   # Construct final item
   - determine <[item].with[lore=<[lore]>;hides=ATTRIBUTES]>
+
+
+# Applies ilore to an item and saves it to the server's flags. Useful for preprocessing items.
+# Flag syntax: `ilore_<item_script_name>`
+# @def {item} item: The item to apply lore to.
+# @usage Save to server$n- run ilore_save def:<item[my_item]>$n$nRetrieve item$n<server.flag[ilore_my_item]>
+# @uses ilore
+
+ilore_save:
+  type: task
+  definitions: item
+  script:
+  - define name <[item].script.name>
+
+  - if !<[item].has_flag[ilore]>:
+    - debug error "Item <aqua><[name]><&r> has no 'ilore' flag."
+    - stop
+
+  - define result <[item].proc[ilore]>
+  - flag server ilore_<[name]>:<[result]>
 
 
 #| EXAMPLE ITEM
