@@ -99,9 +99,9 @@ item_reload:
   type: world
   events:
     after server start:
-    - run item_reload
+    - run item_load
     after script reload:
-    - run item_reload
+    - run item_load
 
 # <server.flag[ilore_wooden_bat]>
 ```
