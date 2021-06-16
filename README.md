@@ -89,13 +89,13 @@ item_config:
   - wooden_bat
   # other items here...
 
-item_reload:
+item_load:
   type: task
   script:
   - foreach <script[item_config]> as:name:
     - run ilore_save def:<item[<[name]>]>
 
-item_load:
+item_reload:
   type: world
   events:
     after server start:
