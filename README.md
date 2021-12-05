@@ -4,15 +4,12 @@ Intuitive item lore
 
 ## Setup
 
-Install with [dzp](https://github.com/acikek/dzp):
-```sh
-dzp install https://github.com/acikek/ilore
-```
-
-Install with git:
+Clone using git:
 ```sh
 git clone https://github.com/acikek/ilore
 ```
+
+Use [dzp](https://github.com/acikek/dzp-rs) for additional features.
 
 ## Config
 
