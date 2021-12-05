@@ -1,0 +1,10 @@
+---
+name: ilore
+description: Intuitive item lore
+authors:
+  - acikek
+version: 3.0.0
+license: MIT
+homepage: "https://github.com/acikek/ilore"
+repository: "https://github.com/acikek/ilore"
+dependencies: []

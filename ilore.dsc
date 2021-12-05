@@ -1,22 +1,13 @@
-#: dzp-ignore wooden_bat
-
 #| ilore
 #| Intuitive item lore
 #|
-#| @version 1.0.0
+#| @version 3.0.0
 #| @author acikek
 
-
-# The ilore config.
-# @key {map} description: The description data.
-# @key {number} description.max_length: The cutoff for description lines, in pixels.
-# @key {color} description.color: The description text color.
-# @key {element} description.default: The description message if none is provided.
-# @key {map} format: The section format data, with each key being a type name and the value being a format procedure.
-# @key {map} sections: The section data, with each key being a section name and the value being a map with a type and name.
-# @key {map} tiers: The item tier data, with each key being a tier name and the value being a color.
-
 ilore_config:
+  #|---------------
+  #| Config Values
+  #|---------------
   type: data
   description:
     max_length: 220
@@ -42,7 +33,33 @@ ilore_config:
     rare: <aqua>
     super rare: <light_purple>
     legendary: <gold>
-
+  #|---------------
+  #| Documentation
+  #|---------------
+  doc:
+    about: The ilore config
+    keys:
+      description:
+        type: MapTag
+        about: The description data
+      description.max_length:
+        type: ElementTag(Number)
+        about: The cutoff for description lines, in pixels
+      description.color:
+        type: ColorTag
+        about: The description text color
+      description.default:
+        type: ElementTag
+        about: The description message if none is provided
+      format:
+        type: MapTag(ElementTag)
+        about: The section format data, with each key being a type name and the value being a format procedure
+      sections:
+        type: MapTag(ElementTag)
+        about: The section data, with each key being a section name and the value being a map with a type and name
+      tiers:
+        type: MapTag(ColorTag)
+        about: The item tier data, with each key being a tier name and the value being a color
 
 #| Format Scripts
 #| Each is a procedure with definitions value and name.
@@ -68,12 +85,8 @@ ilore_format_map:
   - determine <list[<[name]><gray>:].include[<[lines]>]>
 
 
-# Returns a new item with ilore data applied.
-# Requires the item to have an 'ilore' flag. If not, returns the original item.
-# @def {item} item: The item to apply lore to.
-# @determine {item} The item with applied lore.
-# @usage <item[my_item].proc[ilore]>
-# @uses ilore_config
+#| Returns a new item with ilore data applied.
+#| Requires the item to have an 'ilore' flag. If not, returns the original item.
 
 ilore:
   type: procedure
@@ -151,26 +164,41 @@ ilore:
 
   # Construct final item
   - determine <[item].with[lore=<[lore]>;hides=ATTRIBUTES]>
+  data:
+    about: Returns a new item with ilore data applied. Requires the item to have an 'ilore' flag; if not, returns the original item.
+    defs:
+      item:
+        type: ItemTag
+        about: The item to apply lore to
+    determine:
+      type: ItemTag
+      about: The item with applied lore
+    usage: <item[my_item].proc[ilore]>
+    uses:
+    - ilore_config
 
 
 # Applies ilore to an item and saves it to the server's flags. Useful for preprocessing items.
 # Flag syntax: `ilore_<item_script_name>`
-# @def {item} item: The item to apply lore to.
-# @usage Save to server$n- run ilore_save def:<item[my_item]>$n$nRetrieve item$n<server.flag[ilore_my_item]>
-# @uses ilore
 
 ilore_save:
   type: task
   definitions: item
   script:
   - define name <[item].script.name>
-
   - if !<[item].has_flag[ilore]>:
     - debug error "Item <aqua><[name]><&r> has no 'ilore' flag."
     - stop
-
   - define result <[item].proc[ilore]>
   - flag server ilore_<[name]>:<[result]>
+  data:
+    about: Applies ilore to an item and saves it to the server's flags. Useful for preprocessing items.
+    defs:
+      item:
+        type: ItemTag
+        about: The item to apply lore to
+    uses:
+    - ilore
 
 
 #| EXAMPLE ITEM
